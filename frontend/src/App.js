@@ -6,7 +6,7 @@ import ProductDetails from './components/ProductDetails';
 import './App.css';
 
 const API_URL = process.env.NODE_ENV === 'production' 
-    ? 'https://your-backend-url.com/api' 
+    ? 'https://ratings-and-review-system-kunz.onrender.com/api' 
     : '/api';
 
 function App() {

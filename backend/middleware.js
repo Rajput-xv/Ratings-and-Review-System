@@ -9,8 +9,20 @@ const upload = multer({
 });
 
 function setupMiddleware(app) {
-    app.use(cors());
-    app.use(express.json());
+    const corsOptions = {
+        origin: process.env.NODE_ENV === 'production' 
+            ? [
+                'https://ratings-and-review-system-two.vercel.app',
+                'https://*.vercel.app'
+            ] 
+            : ['http://localhost:3000'],
+        credentials: true,
+        optionsSuccessStatus: 200
+    };
+    
+    app.use(cors(corsOptions));
+    app.use(express.json({ limit: '10mb' }));
+    app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 }
 
 module.exports = { setupMiddleware, upload };

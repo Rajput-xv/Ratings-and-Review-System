@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const API_URL = process.env.NODE_ENV === 'production' 
-    ? 'https://your-backend-url.com/api' 
+    ? 'https://ratings-and-review-system-kunz.onrender.com/api' 
     : '/api';
 
 const ReviewModal = ({ product, onClose, onSubmit }) => {
