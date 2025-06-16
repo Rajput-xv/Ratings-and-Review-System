@@ -308,7 +308,7 @@ const ReviewModal = ({ product, onClose, onSubmit }) => {
                                     onClick={removeImage}
                                     disabled={loading}
                                 >
-                                    Remove
+                                    X
                                 </button>
                             </div>
                         )}
