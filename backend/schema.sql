@@ -2,7 +2,7 @@ CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200) NOT NULL,
     description TEXT,
-    image_url VARCHAR(500),
+    image_url LONGTEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -13,7 +13,7 @@ CREATE TABLE reviews (
     rating INT CHECK (rating >= 1 AND rating <= 5),
     review_text TEXT,
     tags JSON,
-    image_url VARCHAR(500),
+    image_url LONGTEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id),
     UNIQUE KEY unique_user_product (user_name, product_id)
