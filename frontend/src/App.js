@@ -5,9 +5,10 @@ import ReviewModal from './components/ReviewModal';
 import ProductDetails from './components/ProductDetails';
 import './App.css';
 
-const API_URL = process.env.NODE_ENV === 'production' 
-    ? 'https://ratings-and-review-system-kunz.onrender.com/api' 
-    : '/api';
+const API_URL = process.env.REACT_APP_API_URL || 
+    (process.env.NODE_ENV === 'production' 
+        ? 'https://ratings-and-review-system-kunz.onrender.com/api' 
+        : 'http://localhost:5000/api');
 
 function App() {
     const [products, setProducts] = useState([]);
