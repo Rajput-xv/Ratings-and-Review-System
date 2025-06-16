@@ -11,7 +11,7 @@ if (process.env.DATABASE_URL) {
         port: url.port,
         user: url.username,
         password: url.password,
-        database: url.pathname.slice(1), // Removing leading slash
+        database: url.pathname.slice(1),
         ssl: { rejectUnauthorized: false }
     };
 } else {

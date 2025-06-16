@@ -1,6 +1,7 @@
 const express = require('express');
 const { getDB } = require('./config/database');
 const { upload } = require('./middleware');
+const cloudinary = require('./config/cloudinary');
 
 const router = express.Router();
 
@@ -59,7 +60,7 @@ router.get('/products/:id', async (req, res) => {
     }
 });
 
-// adding review to a product
+// adding review to a product with image upload to Cloudinary
 router.post('/reviews', upload.single('image'), async (req, res) => {
     try {
         const db = getDB();
@@ -105,10 +106,33 @@ router.post('/reviews', upload.single('image'), async (req, res) => {
             }
         }
 
-        // store image as base64
+        // Upload image to Cloudinary if provided
         let imageUrl = null;
         if (req.file) {
-            imageUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+            try {
+                console.log('Uploading image to Cloudinary...');
+                
+                // Convert buffer to base64 for Cloudinary
+                const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+                
+                // Upload to Cloudinary
+                const uploadResult = await cloudinary.uploader.upload(base64Image, {
+                    folder: 'reviews', // Organize images in a folder
+                    resource_type: 'image',
+                    transformation: [
+                        { width: 800, height: 600, crop: 'limit' }, // Resize large images
+                        { quality: 'auto' }, // Optimize quality
+                        { format: 'auto' } // Auto format (WebP, etc.)
+                    ]
+                });
+
+                imageUrl = uploadResult.secure_url;
+                console.log('Image uploaded successfully:', imageUrl);
+                
+            } catch (uploadError) {
+                console.error('Error uploading image to Cloudinary:', uploadError);
+                return res.status(500).json({ error: 'Failed to upload image. Please try again.' });
+            }
         }
 
         // inserting review of the product
@@ -119,11 +143,12 @@ router.post('/reviews', upload.single('image'), async (req, res) => {
 
         res.status(201).json({ 
             message: 'Review added successfully',
-            reviewId: result.insertId 
+            reviewId: result.insertId,
+            imageUrl: imageUrl
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to add review' });
+        console.error('Error adding review:', error);
+        res.status(500).json({ error: 'Failed to add review. Please try again.' });
     }
 });
 

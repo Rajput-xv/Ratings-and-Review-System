@@ -2,10 +2,10 @@ const cors = require('cors');
 const express = require('express');
 const multer = require('multer');
 
-// File upload setup
+// File upload setup with size limit (2MB)
 const upload = multer({ 
     storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 } // making 5MB limit for file size uploads
+    limits: { fileSize: 2 * 1024 * 1024 } 
 });
 
 function setupMiddleware(app) {
