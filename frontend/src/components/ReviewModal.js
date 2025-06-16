@@ -228,7 +228,7 @@ const ReviewModal = ({ product, onClose, onSubmit }) => {
                     <img src={product.image_url} alt={product.name} />
                     <div>
                         <h3>{product.name}</h3>
-                        <p className="price">${product.price}</p>
+                        <p className="product-description">{product.description}</p>
                     </div>
                 </div>
 
