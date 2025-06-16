@@ -10,14 +10,11 @@ const upload = multer({
 
 function setupMiddleware(app) {
     const corsOptions = {
-        origin: process.env.NODE_ENV === 'production' 
-            ? [
-                'https://ratings-and-review-system-two.vercel.app',
-                'https://*.vercel.app'
-            ] 
-            : ['http://localhost:3000'],
+        origin: true,
         credentials: true,
-        optionsSuccessStatus: 200
+        optionsSuccessStatus: 200,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
     };
     
     app.use(cors(corsOptions));
