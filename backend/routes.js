@@ -110,7 +110,7 @@ router.post('/reviews', upload.single('image'), async (req, res) => {
         let imageUrl = null;
         if (req.file) {
             try {
-                console.log('Uploading image to Cloudinary...');
+                // console.log('Uploading image to Cloudinary...');
                 
                 // Convert buffer to base64 for Cloudinary
                 const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
@@ -127,7 +127,7 @@ router.post('/reviews', upload.single('image'), async (req, res) => {
                 });
 
                 imageUrl = uploadResult.secure_url;
-                console.log('Image uploaded successfully:', imageUrl);
+                // console.log('Image uploaded successfully:', imageUrl);
                 
             } catch (uploadError) {
                 console.error('Error uploading image to Cloudinary:', uploadError);

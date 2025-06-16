@@ -81,9 +81,9 @@ const ReviewModal = ({ product, onClose, onSubmit }) => {
             
             // Compress image if it's larger than 500KB
             if (file.size > 500 * 1024) {
-                console.log('Compressing image...');
+                // console.log('Compressing image...');
                 processedFile = await compressImage(file);
-                console.log(`Image compressed from ${file.size} bytes to ${processedFile.size} bytes`);
+                // console.log(`Image compressed from ${file.size} bytes to ${processedFile.size} bytes`);
             }
 
             // Final size check after compression
@@ -164,7 +164,7 @@ const ReviewModal = ({ product, onClose, onSubmit }) => {
                 submitData.append('image', formData.image);
             }
 
-            console.log('Submitting review...');
+            // console.log('Submitting review...');
             const response = await axios.post(`${API_URL}/reviews`, submitData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -172,7 +172,7 @@ const ReviewModal = ({ product, onClose, onSubmit }) => {
                 timeout: 30000, // 30 second timeout
             });
 
-            console.log('Review submitted successfully:', response.data);
+            // console.log('Review submitted successfully:', response.data);
             onSubmit();
             onClose();
         } catch (error) {
